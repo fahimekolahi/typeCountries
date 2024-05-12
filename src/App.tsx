@@ -1,25 +1,49 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { ReactElement, useState , useEffect} from 'react';
 import './App.css';
+import CountriesBox from './components/button';
 
-function App() {
+
+
+
+const [countriesList , setCountriesList] = useState<[]>()
+
+
+
+function App(){
+useEffect(()=>{
+fetch('https://restcountries.com/v3.1/all')
+.then(res=> res.json())
+.then(result=>setCountriesList(result))
+.catch(err=>console.log(err))
+
+
+
+
+},[])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+  
+<>
+
+{countriesList.map(item=><CountriesBox name={item.name.common} image={item.flags.png}  continent={item.continents} status={item.status} population={item.population}/>)}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</>
+
+
   );
 }
 
